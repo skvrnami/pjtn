@@ -58,25 +58,6 @@ tbl_g <- as_tbl_graph(graph)
 BLUE <- "#1017b6"
 ORANGE <- "#ff5400"
 
-# tbl_g %>% 
-#     activate(nodes) %>% 
-#     left_join(., tags_count, by = c("name"="path")) %>% 
-#     filter(grepl("Přeživší", name)) %>% 
-#     ggraph(., layout = "auto") + 
-#     geom_node_text(aes(label = name), repel = TRUE,
-#                    colour = ORANGE) + 
-#     geom_node_point(aes(size = n), colour = BLUE) +
-#     geom_edge_link0(aes(edge_width = weight), alpha = 0.3) + 
-#     scale_colour_viridis_d(end = 0.8) + 
-#     theme_graph(base_family = "Poppins") +
-#     # theme(text=element_text(family="Poppins")) + 
-#     labs(
-#         title = "Proč jsme to nenahlásily*i",
-#         size = "Počet výskytu tématu", 
-#         edge_width = "Spoluvýskyt tématu", 
-#         caption = "Data: Proč jsme to nenahlásily*i"
-#     )
-
 g1 <- tbl_g %>% 
     activate(nodes) %>% 
     left_join(., tags_count, by = c("name"="name_short")) %>% 
