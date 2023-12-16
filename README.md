@@ -1,6 +1,6 @@
 ## README
 
-Replikační materiály pro vizualizace k projektu "Proč oběti nenahlašují připady sexualizovaného násilí?".
+Replikační materiály pro prototypy vizualizace k projektu "Proč oběti nenahlašují připady sexualizovaného násilí?". Výzkumná zpráva [tady](https://www.procjsmetonenahlasili.org/vyzkum).
 
 ## Grafy četností témat (kódů) zmiňovaných oběťmi
 
@@ -16,10 +16,10 @@ Replikační materiály pro vizualizace k projektu "Proč oběti nenahlašují p
 
 ![](figs/graf_celkovy.png)
 
-Detekce komunit pomocí Louvain method.
+### Detekce komunit pomocí Louvain method
 
-![](figs/graf_komponenta1_deti.png)
+![](figs/graf_komponenta1.png)
 
-![](figs/graf_komponenta2_alko.png)
+![](figs/graf_komponenta2.png)
 
-![](figs/graf_komponenta3_partneri.png)
+![](figs/graf_komponenta3.png)

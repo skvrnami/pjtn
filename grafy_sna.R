@@ -7,6 +7,8 @@ library(extrafont)
 library(ggforce)
 library(graphlayouts)
 
+set.seed(1234)
+
 con <- dbConnect(SQLite(), "data/2023-11-09_Vzkum PJTN.sqlite3")
 
 data <- tbl(con, "highlights") %>% 
@@ -14,6 +16,8 @@ data <- tbl(con, "highlights") %>%
     left_join(., tbl(con, "tags"), by = c("tag_id"="id")) %>% 
     collect() %>% 
     filter(!is.na(tag_id)) 
+
+dbDisconnect(con)
 
 data_clean <- data %>% 
     mutate(name_short = stringr::str_extract(path, "([A-Ža-ž, ]+$)", group = 1)) %>% 
@@ -91,7 +95,7 @@ bb <- layout_with_stress(g1)
 g1_first <- g1 %>% 
     activate(nodes) %>% 
     mutate(group_hull = if_else(group == 1, as.character(group), NA_character_), 
-           label_hull = if_else(group == 1, "Label", NA_character_), 
+           label_hull = if_else(group == 1, "Kódy často zmiňované v případech sexuálního násilí na dětech", NA_character_), 
            description_hull = if_else(group == 1, "- popisek, ... ", NA_character_))
 
 ggraph(g1_first,
@@ -103,9 +107,10 @@ ggraph(g1_first,
     geom_mark_hull(
         aes(x, y, group = group_hull, 
             fill = group_hull, 
-            filter = !is.na(group_hull), 
-            label = label_hull, 
-            description = description_hull),
+            filter = !is.na(group_hull)
+            # label = label_hull,
+            # description = description_hull
+            ),
         concavity = 3,
         expand = unit(2, "mm"),
         alpha = 0.1, 
@@ -126,13 +131,13 @@ ggraph(g1_first,
            size = "none", edge_width = "none") + 
     labs(
         title = "Nejčastěji zmiňovaná témata a vazby mezi nimi",
-        subtitle = "Sexualizované násilí na dětech",
+        subtitle = "Komponenta 1",
         # size = "Počet výskytu tématu",
         # edge_width = "Spoluvýskyt tématu",
         caption = "Data: Proč jsme to nenahlásily*i, zobrazeny pouze body s více než 25 výskyty a vazby s více než 15 výskyty."
     )
 
-ggsave("figs/graf_komponenta1_deti.png", width = 10, height = 7)
+ggsave("figs/graf_komponenta1.png", width = 10, height = 7)
 
 g1_snd <- g1 %>% 
     activate(nodes) %>% 
@@ -149,9 +154,10 @@ ggraph(g1_snd,
     geom_mark_hull(
         aes(x, y, group = group_hull, 
             fill = group_hull, 
-            filter = !is.na(group_hull), 
-            label = label_hull, 
-            description = description_hull),
+            filter = !is.na(group_hull) 
+            # label = label_hull, 
+            # description = description_hull
+            ),
         concavity = 2,
         expand = unit(2, "mm"),
         alpha = 0.1, 
@@ -172,12 +178,13 @@ ggraph(g1_snd,
            size = "none", edge_width = "none") + 
     labs(
         title = "Nejčastěji zmiňovaná témata a vazby mezi nimi",
+        subtitle = "Komponenta 2",
         # size = "Počet výskytu tématu",
         # edge_width = "Spoluvýskyt tématu",
         caption = "Data: Proč jsme to nenahlásily*i, zobrazeny pouze body s více než 25 výskyty a vazby s více než 15 výskyty."
     )
 
-ggsave("figs/graf_komponenta2_alko.png", width = 10, height = 7)
+ggsave("figs/graf_komponenta2.png", width = 10, height = 7)
 
 g1_thd <- g1 %>% 
     activate(nodes) %>% 
@@ -194,9 +201,10 @@ ggraph(g1_thd,
     geom_mark_hull(
         aes(x, y, group = group_hull, 
             fill = group_hull, 
-            filter = !is.na(group_hull), 
-            label = label_hull, 
-            description = description_hull),
+            filter = !is.na(group_hull)
+            # label = label_hull, 
+            # description = description_hull
+            ),
         concavity = 2,
         expand = unit(2, "mm"),
         alpha = 0.1, 
@@ -217,9 +225,10 @@ ggraph(g1_thd,
            size = "none", edge_width = "none") + 
     labs(
         title = "Nejčastěji zmiňovaná témata a vazby mezi nimi",
+        subtitle = "Komponenta 3",
         # size = "Počet výskytu tématu",
         # edge_width = "Spoluvýskyt tématu",
         caption = "Data: Proč jsme to nenahlásily*i, zobrazeny pouze body s více než 25 výskyty a vazby s více než 15 výskyty."
     )
 
-ggsave("figs/graf_komponenta3_partneri.png", width = 10, height = 7)
+ggsave("figs/graf_komponenta3.png", width = 10, height = 7)
